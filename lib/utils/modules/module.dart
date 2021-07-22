@@ -6,7 +6,7 @@ abstract class Module {
   List<Page> pages();
   void services();
   List<SingleChildWidget> providers();
-  void routes();
+  List routes();
 }
 
 class Page{

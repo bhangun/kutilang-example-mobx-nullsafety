@@ -16,6 +16,6 @@ class AppsRoutes {
     splash: (BuildContext context) => SplashScreen(),
     login: (BuildContext context) => LoginScreen(),
     home: (BuildContext context) => HomeScreen(),
-    about: (BuildContext context) => AboutScreen(),
+    about: (BuildContext context) => AboutPage(),
   };
 }

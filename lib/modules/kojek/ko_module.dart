@@ -1,7 +1,5 @@
-import 'package:kutilang_example/models/module.dart';
-import 'package:provider/single_child_widget.dart';
 
-import '../../utils/routes.dart';
+import 'package:kutilang_example/utils/modules/module.dart';
 import 'ko_routes.dart';
 
 class KoModule implements Module {
@@ -28,13 +26,12 @@ class KoModule implements Module {
   services() {}
 
   @override
-  void routes() {
-    RoutesService.addRoutes(KoRoutes.routes);
-  }
+  routes() =>[KoRoutes.routes];
+    
+    //RoutesService.addRoutes(KoRoutes.routes);
+  
 
-   @override
-  List<SingleChildWidget> providers() {
-    return [
-    ];
-  }
+  @override
+ providers() => [];
+  
 }

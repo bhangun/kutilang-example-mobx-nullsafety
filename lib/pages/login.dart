@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:kutilang_example/generated/localization.dart';
-import 'package:kutilang_example/layout/mobile.dart';
-
-import 'package:kutilang_example/modules/kojek/ko_routes.dart';
-import 'package:kutilang_example/services/navigation.dart';
-import 'package:kutilang_example/store/app_store/app_store.dart';
-import 'package:kutilang_example/store/settings_store/settings_store.dart';
+import 'package:kutilang_example/services/apps_routes.dart';
 import 'package:provider/provider.dart';
 
+import '../generated/localization.dart';
+import '../layout/mobile.dart';
+import '../modules/kojek/ko_routes.dart';
+import '../services/navigation.dart';
+import '../store/app_store/app_store.dart';
+import '../store/settings_store/settings_store.dart';
 import '../utils/config.dart';
 import '../widgets/textfield_widget.dart';
 
@@ -72,6 +72,13 @@ class _Loginpagestate extends State<LoginScreen> {
                   icon: Icon(Icons.pedal_bike),
                   onPressed: () =>
                       NavigationServices.navigateTo(KoRoutes.koHome),
+                ),
+                IconButton(
+                  splashRadius: 15,
+                  color: Theme.of(context).buttonColor,
+                  icon: Icon(Icons.info),
+                  onPressed: () =>
+                      NavigationServices.navigateTo(AppsRoutes.about),
                 ),
                 IconButton(
                     splashRadius: 15,

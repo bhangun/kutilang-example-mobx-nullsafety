@@ -1,6 +1,4 @@
-
-
-import 'package:kutilang_example/models/module.dart';
+import 'module.dart';
 
 class Modules {
   static var _pages  = <Page>[];

@@ -1,8 +1,9 @@
 import 'dart:async';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:kutilang_example/services/apps_routes.dart';
-import 'package:flutter/material.dart';
 
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+import '../services/apps_routes.dart';
 import '../utils/config.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -18,7 +19,7 @@ class _Splashpagestate extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-     startTimer();
+    startTimer();
   }
 
   @override
@@ -34,11 +35,9 @@ class _Splashpagestate extends State<SplashScreen> {
   }
 
   navigate() async {
-   
     //if ((await AppDataSource.fetch(0))!=null ) {
-      //Navigator.of(context).pushReplacementNamed(AppsRoutes.home);
-    
-      Navigator.of(context).pushReplacementNamed(AppsRoutes.login);
-    
+    //Navigator.of(context).pushReplacementNamed(AppsRoutes.home);
+
+    Navigator.of(context).pushReplacementNamed(AppsRoutes.login);
   }
 }

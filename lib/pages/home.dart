@@ -4,10 +4,8 @@ import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:kutilang_example/widgets/bottom_bar_widget.dart';
 
-// import '../bloc/authentication/authentication_bloc.dart';
-
+import '../widgets/bottom_bar_widget.dart';
 import '../widgets/appbar_widget.dart';
 
 class HomeScreen extends StatefulWidget {

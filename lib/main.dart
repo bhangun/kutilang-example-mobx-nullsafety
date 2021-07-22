@@ -10,32 +10,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'generated/localization.dart';
 import 'services/apps_routes.dart';
 import 'services/navigation.dart';
-import 'store/app_store/app_store.dart';
 import 'services/preferences_service.dart';
 import 'store/settings_store/settings_store.dart';
 import 'utils/config.dart';
-import 'utils/modules_registry.dart';
+import 'utils/modules/modules_registry.dart';
 import 'utils/routes.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+
 
 Future<void> main() async {
   // Initialized
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   final sharedPreferences = await SharedPreferences.getInstance();
-  
+
   // Register all module
   ModulesRegistry.registry();
 
   // Observe mobx state change
-  //mainContext.spy(print);
+  // mainContext.spy(print);
 
   // Run main app
   runApp(KutilangApp(sharedPreferences));

@@ -1,9 +1,7 @@
-import 'package:kutilang_example/models/module.dart';
-import 'package:kutilang_example/services/apps_routes.dart';
-import 'package:kutilang_example/store/app_store/app_store.dart';
 import 'package:provider/provider.dart';
-import 'package:provider/single_child_widget.dart';
-import '../utils/routes.dart';
+import '../services/apps_routes.dart';
+import '../store/app_store/app_store.dart';
+import '../utils/modules/module.dart';
 import 'account/services/user_routes.dart';
 
 class MainModule implements Module {
@@ -27,7 +25,7 @@ class MainModule implements Module {
   services() {}
 
   @override
-  List<SingleChildWidget> providers() {
+  providers() {
     return [
       Provider<AppStore>(
         create: (_) => AppStore(),
@@ -37,8 +35,5 @@ class MainModule implements Module {
   }
 
   @override
-  void routes() {
-    RoutesService.addRoutes(AppsRoutes.routes);
-    RoutesService.addRoutes(UserRoutes.routes);
-  }
+  routes() => [AppsRoutes.routes, UserRoutes.routes];
 }

@@ -2,6 +2,7 @@ import 'package:kutilang_example/modules/register_modules.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/single_child_widget.dart';
 
+import '../routes.dart';
 import 'modules.dart';
 
 class ModulesRegistry {
@@ -25,13 +26,13 @@ class ModulesRegistry {
           Modules.addPages(p);
         });
 
-        //log.info(m.providers());
-
         m.providers().forEach((e) {
           _providerList.add(e);
         });
-       // _blocProvider.add(m.providers());
-        m.routes();
+    
+        m.routes().forEach((r) {
+          RoutesService.addRoutes(r);
+        });
         m.services();
     });
   }

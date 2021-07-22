@@ -1,6 +1,6 @@
-import 'package:kutilang_example/models/module.dart';
-import 'package:kutilang_example/modules/kojek/ko_module.dart';
 import 'main_module.dart';
+import '../utils/modules/module.dart';
+import '../modules/kojek/ko_module.dart';
 // kutilang-needle-import-module -- don't remove this line
 
 List<Module> registerModules(){
