@@ -32,7 +32,7 @@ Future<void> main() async {
   final sharedPreferences = await SharedPreferences.getInstance();
   
   // Register all module
-  ModulesRegistry();
+  ModulesRegistry.registry();
 
   // Observe mobx state change
   //mainContext.spy(print);
@@ -49,16 +49,13 @@ class KutilangApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MultiProvider(
           providers: [
-            Provider<AppStore>(
-              create: (_) => AppStore(),
-              dispose: (_, store) => store.dispose(),
-            ),
             Provider<PreferencesService>(
               create: (_) => PreferencesService(sharedPreferences),
             ),
             ProxyProvider<PreferencesService, SettingsStore>(
                 update: (_, preferencesService, __) =>
                     SettingsStore(preferencesService)),
+            ...ModulesRegistry.providers()
           ],
           child: Consumer<SettingsStore>(
               builder: (_, store, __) => Observer(

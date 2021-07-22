@@ -1,7 +1,8 @@
 import 'package:kutilang_example/models/module.dart';
 import 'package:kutilang_example/services/apps_routes.dart';
-
-
+import 'package:kutilang_example/store/app_store/app_store.dart';
+import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
 import '../utils/routes.dart';
 import 'account/services/user_routes.dart';
 
@@ -25,25 +26,19 @@ class MainModule implements Module {
   @override
   services() {}
 
-  /* @override
-  List<BlocProvider> providers() {
+  @override
+  List<SingleChildWidget> providers() {
     return [
-      BlocProvider(
-        create: (_) => ThemeCubit(),
+      Provider<AppStore>(
+        create: (_) => AppStore(),
+        dispose: (_, store) => store.dispose(),
       ),
-     
     ];
-  } */
+  }
 
   @override
   void routes() {
     RoutesService.addRoutes(AppsRoutes.routes);
     RoutesService.addRoutes(UserRoutes.routes);
   }
-
-  /* @override
-  providers() {
-    // TODO: implement providers
-    throw UnimplementedError();
-  } */
 }

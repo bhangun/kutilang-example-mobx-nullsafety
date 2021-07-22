@@ -1,12 +1,13 @@
 
+import 'package:provider/single_child_widget.dart';
+
 abstract class Module {
   String? name;
   List<Page> pages();
   void services();
-  //providers();
+  List<SingleChildWidget> providers();
   void routes();
 }
-
 
 class Page{
   String? name;
