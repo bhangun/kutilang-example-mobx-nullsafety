@@ -27,13 +27,13 @@ mixin _$AppStore on _AppStore, Store {
   final _$themeAtom = Atom(name: '_AppStore.theme');
 
   @override
-  ThemeData? get theme {
+  ThemeData get theme {
     _$themeAtom.reportRead();
     return super.theme;
   }
 
   @override
-  set theme(ThemeData? value) {
+  set theme(ThemeData value) {
     _$themeAtom.reportWrite(value, super.theme, () {
       super.theme = value;
     });
@@ -42,30 +42,26 @@ mixin _$AppStore on _AppStore, Store {
   final _$localeAtom = Atom(name: '_AppStore.locale');
 
   @override
-  Locale? get locale {
+  Locale get locale {
     _$localeAtom.reportRead();
     return super.locale;
   }
 
   @override
-  set locale(Locale? value) {
+  set locale(Locale value) {
     _$localeAtom.reportWrite(value, super.locale, () {
       super.locale = value;
     });
   }
 
-  final _$_AppStoreActionController = ActionController(name: '_AppStore');
+  final _$switchLocaleAsyncAction = AsyncAction('_AppStore.switchLocale');
 
   @override
-  dynamic switchLocale(String flag) {
-    final _$actionInfo =
-        _$_AppStoreActionController.startAction(name: '_AppStore.switchLocale');
-    try {
-      return super.switchLocale(flag);
-    } finally {
-      _$_AppStoreActionController.endAction(_$actionInfo);
-    }
+  Future<void> switchLocale(String flag) {
+    return _$switchLocaleAsyncAction.run(() => super.switchLocale(flag));
   }
+
+  final _$_AppStoreActionController = ActionController(name: '_AppStore');
 
   @override
   dynamic forgotPassword() {
@@ -90,44 +86,11 @@ mixin _$AppStore on _AppStore, Store {
   }
 
   @override
-  dynamic switchTheme(bool value) {
+  dynamic switchTheme() {
     final _$actionInfo =
         _$_AppStoreActionController.startAction(name: '_AppStore.switchTheme');
     try {
-      return super.switchTheme(value);
-    } finally {
-      _$_AppStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic switchToDark() {
-    final _$actionInfo =
-        _$_AppStoreActionController.startAction(name: '_AppStore.switchToDark');
-    try {
-      return super.switchToDark();
-    } finally {
-      _$_AppStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic switchToLight() {
-    final _$actionInfo = _$_AppStoreActionController.startAction(
-        name: '_AppStore.switchToLight');
-    try {
-      return super.switchToLight();
-    } finally {
-      _$_AppStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic toggleTheme() {
-    final _$actionInfo =
-        _$_AppStoreActionController.startAction(name: '_AppStore.toggleTheme');
-    try {
-      return super.toggleTheme();
+      return super.switchTheme();
     } finally {
       _$_AppStoreActionController.endAction(_$actionInfo);
     }

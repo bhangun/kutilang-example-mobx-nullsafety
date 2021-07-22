@@ -9,8 +9,6 @@ import 'package:kutilang_example/modules/kojek/ko_routes.dart';
 //import 'package:kutilang_example/services/apps_routes.dart';
 import 'package:kutilang_example/services/navigation.dart';
 import 'package:kutilang_example/store/app_store/app_store.dart';
-import 'package:kutilang_example/store/app_store/settings_store.dart';
-import 'package:provider/provider.dart';
 
 import '../utils/config.dart';
 import '../widgets/textfield_widget.dart';
@@ -34,7 +32,7 @@ class _Loginpagestate extends State<LoginScreen> {
   bool _isEyeOpen = true;
 
   bool _isObscure = true;
-  //final _appStore = SettingsStore();
+  final _appStore = AppStore();
 
   @override
   void initState() {
@@ -62,9 +60,8 @@ class _Loginpagestate extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<SettingsStore>(
-      builder: (_, _appStore, __) =>  /* Observer(
-        builder: (context) => */ Scaffold(
+    return Observer(
+        builder: (context) => Scaffold(
             primary: true,
             appBar: AppBar(
                 backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -87,15 +84,16 @@ class _Loginpagestate extends State<LoginScreen> {
                       splashRadius: 15,
                       color: Theme.of(context).buttonColor,
                       icon: Icon(Icons.flag),
-                      onPressed: () => _showLocales(_appStore)),
+                      onPressed: () => _showLocales()),
                 ]),
-            body: _body(context, _appStore))
-            //)
-            );
+            body: _body(context)));
   }
 
-  _body(BuildContext context,_appStore) {
-    return  Material(
+  _body(BuildContext context) {
+    return Observer(
+        key: Key('login_page'),
+        builder: (context) {
+          return Material(
               key: _formKey,
               child: MobileLayout(
                 rightChild: Column(
@@ -109,10 +107,10 @@ class _Loginpagestate extends State<LoginScreen> {
                       height: 60,
                     ),
                     SizedBox(height: 24.0),
-                    _userIdField(_appStore),
-                    _passwordField(_appStore),
-                    _forgotPasswordButton(_appStore),
-                    _signInButton(_appStore),
+                    _userIdField(),
+                    _passwordField(),
+                    _forgotPasswordButton(),
+                    _signInButton(),
                   ],
                 ),
                 leftChild: SizedBox.expand(
@@ -123,10 +121,13 @@ class _Loginpagestate extends State<LoginScreen> {
                 )),
                 showProgress: false,
               ));
-        
+        });
   }
 
-  Widget _userIdField(_appStore) =>  TextFieldWidget(
+  Widget _userIdField() => Observer(
+      key: Key('user_field'),
+      builder: (context) {
+        return TextFieldWidget(
           hint: AppLocalizations.of(context)!.email,
           inputType: TextInputType.emailAddress,
           icon: Icons.person,
@@ -138,9 +139,12 @@ class _Loginpagestate extends State<LoginScreen> {
           },
           errorText: _appStore.userMessage,
         );
-      //});
+      });
 
-  Widget _passwordField(_appStore) => TextFieldWidget(
+  Widget _passwordField() => Observer(
+      key: Key('password_field'),
+      builder: (context) {
+        return TextFieldWidget(
           hint: AppLocalizations.of(context)!.password,
           isObscure: _isObscure,
           padding: EdgeInsets.only(top: 16.0),
@@ -153,24 +157,24 @@ class _Loginpagestate extends State<LoginScreen> {
           isEyeOpen: _isEyeOpen,
           showEye: true,
         );
-    //  });
+      });
 
-  Widget _forgotPasswordButton(_appStore) => Align(
+  Widget _forgotPasswordButton() => Align(
       alignment: FractionalOffset.centerRight,
       child: TextButton(
           key: Key('user_forgot_password'),
           child: Text(AppLocalizations.of(context)!.forgotPassword!),
           onPressed: () => _appStore.forgotPassword()));
 
-  Widget _signInButton(_appStore) => /* Observer(
+  Widget _signInButton() => Observer(
       key: Key('signin_btn'),
       builder: (context) {
-        return */ ElevatedButton(
+        return ElevatedButton(
           key: Key('user_sign_button'),
           onPressed: () => _appStore.login(),
           child: Text(AppLocalizations.of(context)!.sign_in!),
         );
-     // });
+      });
 
   _onEyePressed() {
     setState(() {
@@ -179,7 +183,7 @@ class _Loginpagestate extends State<LoginScreen> {
     });
   }
 
-  _showLocales(_appStore) {
+  _showLocales() {
     showModalBottomSheet<void>(
         context: context,
         builder: (BuildContext context) {
@@ -187,20 +191,20 @@ class _Loginpagestate extends State<LoginScreen> {
               height: 200,
               child: ListView(
                 children: [
-                  _localeBtn('Bahasa', 'ID',_appStore),
-                  _localeBtn('English', 'EN',_appStore),
+                  _localeBtn('Bahasa', 'ID'),
+                  _localeBtn('English', 'EN'),
                 ],
               ));
         });
   }
 
-  _localeBtn(title, key,_appStore) {
+  _localeBtn(title, key) {
     return TextButton(
         child: Text(title + _appStore.locale.toString()),
-        onPressed: () => _onLocalePressed(key,_appStore));
+        onPressed: () => _onLocalePressed(key));
   }
 
-  _onLocalePressed(key,_appStore) {
+  _onLocalePressed(key) {
     _appStore.switchLocale(key);
   }
 

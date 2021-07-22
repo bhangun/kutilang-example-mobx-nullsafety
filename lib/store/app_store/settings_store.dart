@@ -1,33 +1,34 @@
 import 'package:f_logs/f_logs.dart';
 import 'package:flutter/material.dart';
-import 'package:kutilang_example/services/apps_routes.dart';
-import 'package:kutilang_example/services/navigation.dart';
 import 'package:kutilang_example/utils/themes/theme_services.dart';
-
 import 'package:mobx/mobx.dart';
 
-part 'app_store.g.dart';
+import 'preferences_service.dart';
 
-class AppStore = _AppStore with _$AppStore;
+part 'settings_store.g.dart';
 
-abstract class _AppStore with Store {
-  _AppStore() {
-   // reaction((_) => isLightTheme, switchTheme);
+class SettingsStore = _SettingsStore with _$SettingsStore;
+
+abstract class _SettingsStore with Store {
+  _SettingsStore(this._preferencesService) {
+    useDarkMode = _preferencesService.useDarkMode;
   }
 
-  /*  @observable
-  String locale = 'en'; */
+
+  final PreferencesService _preferencesService;
 
   @observable
-  bool isLightTheme = true;
+  bool useDarkMode = false;
 
-  bool isLocale = true;
+    @observable
+  bool isLightTheme = true;
 
   @observable
   ThemeData theme =ThemeServices.lightTheme();
 
-  @observable
+    @observable
   Locale locale = Locale('en', 'EN');
+
 
   String errorMessage = 'error';
 
@@ -38,16 +39,13 @@ abstract class _AppStore with Store {
   String forgotMessage = 'user message';
   bool showError = false;
 
+
   @action
-  Future<void> switchLocale(String flag) async {
-    locale = Locale(flag.toLowerCase(), flag);
+  Future<void> setDarkMode({required bool value}) async {
+    _preferencesService.useDarkMode = value;
+    useDarkMode = value;
   }
 
-  @action
-  forgotPassword() {}
-
-  @action
-  login() {}
 
   @action
   switchTheme(){
@@ -65,15 +63,8 @@ abstract class _AppStore with Store {
     theme = ThemeServices.lightTheme();
   }
 
-  @action
-  goTo(int index) {
-    switch (index) {
-      case 0:
-        NavigationServices.navigateTo(AppsRoutes.home);
-        break;
-      default:
-    }
+    @action
+  Future<void> switchLocale(String flag) async {
+    locale = Locale(flag.toLowerCase(), flag);
   }
-
-  void dispose() {}
 }
