@@ -15,7 +15,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'generated/localization.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'services/apps_routes.dart';
 import 'services/navigation.dart';
 import 'services/preferences_service.dart';
@@ -73,7 +73,7 @@ class KutilangApp extends StatelessWidget {
                         ) =>
                             store.locale,
                         localizationsDelegates: [
-                          const AppLocalizationsDelegate(),
+                         AppLocalizations.delegate,
                           GlobalMaterialLocalizations.delegate,
                           GlobalWidgetsLocalizations.delegate,
                         ],

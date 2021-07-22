@@ -1,0 +1,14 @@
+{
+    "title": "hello world",
+    "home": "Home",
+    "sign_in": "Sign In",
+    "forgot_password": "Forgot Password",
+    "please_fill_field": "Please fill column",
+    "user_password": "User Password",
+    "password": "Password",
+    "email": "Email",
+    "delete": "Delete",
+    "share": "Share",
+    "add": "Add",
+    "data_empty": "Data empty"
+}

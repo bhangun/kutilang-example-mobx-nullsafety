@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../services/apps_routes.dart';
 import '../store/auth_store/auth_store.dart';
-import '../generated/localization.dart';
+
 import '../layout/mobile.dart';
 import '../modules/kojek/ko_routes.dart';
 import '../services/navigation.dart';
@@ -158,13 +159,13 @@ class _Loginpagestate extends State<LoginScreen> {
       alignment: FractionalOffset.centerRight,
       child: TextButton(
           key: Key('user_forgot_password'),
-          child: Text(AppLocalizations.of(context)!.forgotPassword!),
+          child: Text(AppLocalizations.of(context)!.forgot_password),
           onPressed: () => _authStore.forgotPassword()));
 
   Widget _signInButton() => ElevatedButton(
         key: Key('user_sign_button'),
         onPressed: () => _authStore.login(),
-        child: Text(AppLocalizations.of(context)!.sign_in!),
+        child: Text(AppLocalizations.of(context)!.sign_in),
       );
 
   _onEyePressed() {
