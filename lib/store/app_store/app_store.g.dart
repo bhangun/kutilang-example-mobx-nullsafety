@@ -54,13 +54,6 @@ mixin _$AppStore on _AppStore, Store {
     });
   }
 
-  final _$switchLocaleAsyncAction = AsyncAction('_AppStore.switchLocale');
-
-  @override
-  Future<void> switchLocale(String flag) {
-    return _$switchLocaleAsyncAction.run(() => super.switchLocale(flag));
-  }
-
   final _$_AppStoreActionController = ActionController(name: '_AppStore');
 
   @override
@@ -80,17 +73,6 @@ mixin _$AppStore on _AppStore, Store {
         _$_AppStoreActionController.startAction(name: '_AppStore.login');
     try {
       return super.login();
-    } finally {
-      _$_AppStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic switchTheme() {
-    final _$actionInfo =
-        _$_AppStoreActionController.startAction(name: '_AppStore.switchTheme');
-    try {
-      return super.switchTheme();
     } finally {
       _$_AppStoreActionController.endAction(_$actionInfo);
     }

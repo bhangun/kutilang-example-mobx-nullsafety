@@ -1,4 +1,3 @@
-import 'package:f_logs/f_logs.dart';
 import 'package:flutter/material.dart';
 import 'package:kutilang_example/services/apps_routes.dart';
 import 'package:kutilang_example/services/navigation.dart';
@@ -12,11 +11,9 @@ class AppStore = _AppStore with _$AppStore;
 
 abstract class _AppStore with Store {
   _AppStore() {
-   // reaction((_) => isLightTheme, switchTheme);
+    // reaction((_) => isLightTheme, switchTheme);
   }
 
-  /*  @observable
-  String locale = 'en'; */
 
   @observable
   bool isLightTheme = true;
@@ -24,7 +21,7 @@ abstract class _AppStore with Store {
   bool isLocale = true;
 
   @observable
-  ThemeData theme =ThemeServices.lightTheme();
+  ThemeData theme = ThemeServices.lightTheme();
 
   @observable
   Locale locale = Locale('en', 'EN');
@@ -38,10 +35,6 @@ abstract class _AppStore with Store {
   String forgotMessage = 'user message';
   bool showError = false;
 
-  @action
-  Future<void> switchLocale(String flag) async {
-    locale = Locale(flag.toLowerCase(), flag);
-  }
 
   @action
   forgotPassword() {}
@@ -49,21 +42,6 @@ abstract class _AppStore with Store {
   @action
   login() {}
 
-  @action
-  switchTheme(){
-      isLightTheme = isLightTheme ?false:true;
-     isLightTheme ? switchToLight() : switchToDark();
-  }
-
-  switchToDark() {
-    FLog.info(text: 'dark');
-    theme = ThemeServices.darkTheme();
-  }
-
-  switchToLight() {
-    FLog.info(text: 'light');
-    theme = ThemeServices.lightTheme();
-  }
 
   @action
   goTo(int index) {

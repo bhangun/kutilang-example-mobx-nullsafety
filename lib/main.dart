@@ -9,8 +9,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
-import 'package:f_logs/f_logs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
@@ -20,23 +18,25 @@ import 'generated/localization.dart';
 import 'services/apps_routes.dart';
 import 'services/navigation.dart';
 import 'store/app_store/app_store.dart';
-import 'store/app_store/preferences_service.dart';
-import 'store/app_store/settings_store.dart';
+import 'services/preferences_service.dart';
+import 'store/settings_store/settings_store.dart';
+import 'utils/config.dart';
 import 'utils/modules_registry.dart';
 import 'utils/routes.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'utils/themes/theme_services.dart';
-
 Future<void> main() async {
   // Initialized
   WidgetsFlutterBinding.ensureInitialized();
-final sharedPreferences = await SharedPreferences.getInstance();
-  //initializeReflectable();
+  
+  final sharedPreferences = await SharedPreferences.getInstance();
+  
   // Register all module
   ModulesRegistry();
 
-  mainContext.spy(print);
+  // Observe mobx state change
+  //mainContext.spy(print);
+
   // Run main app
   runApp(KutilangApp(sharedPreferences));
 }
@@ -53,7 +53,7 @@ class KutilangApp extends StatelessWidget {
               create: (_) => AppStore(),
               dispose: (_, store) => store.dispose(),
             ),
-             Provider<PreferencesService>(
+            Provider<PreferencesService>(
               create: (_) => PreferencesService(sharedPreferences),
             ),
             ProxyProvider<PreferencesService, SettingsStore>(
@@ -62,19 +62,10 @@ class KutilangApp extends StatelessWidget {
           ],
           child: Consumer<SettingsStore>(
               builder: (_, store, __) => Observer(
-                  key: Key('kutilangapp'),
+                  key: Key('kutilang_app'),
                   builder: (_) => MaterialApp(
                         key: GlobalKey<NavigatorState>(),
-                        theme: ThemeData(
-                          primarySwatch: Colors.blue,
-                          brightness: store.isLightTheme
-                              ? Brightness.light
-                              : Brightness.dark,
-                        ),
-
-                        /* store.isLightTheme
-                          ? ThemeServices.lightTheme()
-                          : ThemeServices.darkTheme(), */
+                        theme: store.theme,
                         routes: RoutesService.routes,
                         initialRoute: AppsRoutes.splash,
                         navigatorKey: NavigationServices.navigatorKey,
@@ -83,20 +74,13 @@ class KutilangApp extends StatelessWidget {
                         localeResolutionCallback: (
                           Locale? _locale,
                           Iterable<Locale> supportedLocales,
-                        ) {
-                          FLog.info(
-                              text: '<><><><><>' + store.locale.toString());
-                          return store.locale;
-                        },
+                        ) =>
+                            store.locale,
                         localizationsDelegates: [
                           const AppLocalizationsDelegate(),
                           GlobalMaterialLocalizations.delegate,
                           GlobalWidgetsLocalizations.delegate,
                         ],
-                        supportedLocales: [
-                          const Locale('en', ''),
-                          const Locale('id', ''),
-                          const Locale('ar', ''),
-                        ],
+                        supportedLocales: locales,
                       ))));
 }

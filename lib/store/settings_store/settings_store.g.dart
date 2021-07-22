@@ -9,21 +9,6 @@ part of 'settings_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$SettingsStore on _SettingsStore, Store {
-  final _$useDarkModeAtom = Atom(name: '_SettingsStore.useDarkMode');
-
-  @override
-  bool get useDarkMode {
-    _$useDarkModeAtom.reportRead();
-    return super.useDarkMode;
-  }
-
-  @override
-  set useDarkMode(bool value) {
-    _$useDarkModeAtom.reportWrite(value, super.useDarkMode, () {
-      super.useDarkMode = value;
-    });
-  }
-
   final _$isLightThemeAtom = Atom(name: '_SettingsStore.isLightTheme');
 
   @override
@@ -69,13 +54,6 @@ mixin _$SettingsStore on _SettingsStore, Store {
     });
   }
 
-  final _$setDarkModeAsyncAction = AsyncAction('_SettingsStore.setDarkMode');
-
-  @override
-  Future<void> setDarkMode({required bool value}) {
-    return _$setDarkModeAsyncAction.run(() => super.setDarkMode(value: value));
-  }
-
   final _$switchLocaleAsyncAction = AsyncAction('_SettingsStore.switchLocale');
 
   @override
@@ -100,7 +78,6 @@ mixin _$SettingsStore on _SettingsStore, Store {
   @override
   String toString() {
     return '''
-useDarkMode: ${useDarkMode},
 isLightTheme: ${isLightTheme},
 theme: ${theme},
 locale: ${locale}
