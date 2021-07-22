@@ -1,41 +1,50 @@
-import 'package:f_logs/f_logs.dart';
-import 'package:kutilang_example/modules/administration/services/admin_services.dart';
-import 'package:kutilang_example/services/apps_routes.dart';
-import 'package:kutilang_example/services/auth_jwt_services.dart';
-import 'package:kutilang_example/services/navigation.dart';
 import 'package:mobx/mobx.dart';
+import 'package:f_logs/f_logs.dart';
+
+import '../../services/apps_routes.dart';
+import '../../services/auth_jwt_services.dart';
+import '../../services/navigation.dart';
+
 part 'auth_store.g.dart';
 
-class AuthenticationStore = _AuthenticationStore with _$AuthenticationStore;
+class AuthStore = _AuthStore with _$AuthStore;
 
-abstract class _AuthenticationStore with Store {
-
+abstract class _AuthStore with Store {
   @observable
   String username = '';
+
   @observable
   String userMessage = '';
+
   @observable
   String password = '';
+
   @observable
   String passwordMessage = '';
+
   @observable
   String confirmPassword = '';
+
   @observable
   String confirmPasswordMessage = '';
+
   @observable
   bool success = false;
+
   @observable
   bool loggedIn = false;
+
   @observable
   bool loading = false;
+
   @observable
   bool rememberMe = false;
+
   @observable
   String errorMessage = 'error';
+
   @observable
   bool showError = false;
-  
-  
 
   //@action
   bool get canLogin => hasErrorsInLogin; //&& username !='' && password !='';
@@ -45,6 +54,7 @@ abstract class _AuthenticationStore with Store {
       username.isNotEmpty &&
       password.isNotEmpty &&
       confirmPassword.isNotEmpty;
+
   @computed
   bool get canForgetPassword =>
       !hasErrorInForgotPassword && username.isNotEmpty;
@@ -52,24 +62,27 @@ abstract class _AuthenticationStore with Store {
   // error handling:-------------------------------------------------------------------
   @computed
   bool get hasErrorsInLogin => username != '' || password != '';
-@computed
+
+  @computed
   bool get hasErrorsInRegister =>
       username != null || password != null || confirmPassword != null;
-@computed
+  @computed
   bool get hasErrorInForgotPassword => username != null;
 
   // actions:-------------------------------------------------------------------
-@action
+  @action
   void setUserId(String value) {
     username = value;
     _validateUserEmail(value);
   }
-@action
+
+  @action
   void setPassword(String value) {
     password = value;
     _validatePassword(value);
   }
-@action
+
+  @action
   void setConfirmPassword(String value) {
     confirmPassword = value;
   }
@@ -84,44 +97,40 @@ abstract class _AuthenticationStore with Store {
         "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
         ")+";
 
+    String p2 ="^[_.@A-Za-z0-9-]*\$" ;
+
     RegExp regExp = new RegExp(p);
 
     if (value.isEmpty) {
       userMessage = "Email can't be empty";
     } else if (regExp.hasMatch(value)) {
-
-    } //else userMessage = null;
-    /* else if (!isEmail(value)) {
       userMessage = 'Please enter a valid email address';
-    } */
-    /*else {
-
+    } else {
       showError = true;
       errorMessage = 'Email provided isn\'t valid.Try another email address';
-    }*/
+    }
   }
 
   void _validatePassword(String value) {
     if (value.isEmpty) {
       passwordMessage = "Password can't be empty";
-    } /* else if (value.length < 6) {
-      password = "Password must be at-least 6 characters long";
-    }  */
-    else {
-     // passwordMessage = null;
+    } else if (value.length < 6) {
+      passwordMessage = "Password must be at-least 6 characters long";
+    } else {
+      passwordMessage = '';
     }
   }
- 
-  /*void _validateConfirmPassword(String value) {
+
+  void _validateConfirmPassword(String value) {
     if (value.isEmpty) {
       confirmPasswordMessage = "Confirm password can't be empty";
     } else if (value != password) {
       confirmPasswordMessage = "Password doesn't match";
     } else {
-      confirmPasswordMessage = null;
+      confirmPasswordMessage = '';
     }
-    notifyListeners();
-  }*/
+    //notifyListeners();
+  }
 
   @action
   Future register() async {
@@ -131,53 +140,54 @@ abstract class _AuthenticationStore with Store {
   @action
   Future gotoHome() async {
     FLog.info(text: "Redirect to home!");
-    if(loggedIn) NavigationServices.navigateTo(AppsRoutes.home);
+    if (loggedIn) NavigationServices.navigateTo(AppsRoutes.home);
   }
 
-  void _loggedin(value){
-    try{
-      if (value){
+  void _loggedin(value) {
+    try {
+      if (value) {
         FLog.info(text: "Success login!");
         NavigationServices.navigateTo(AppsRoutes.home);
         loggedIn = true;
         loading = false;
         success = true;
-
-      }else if (value.toString().contains("Unauthorized")){
+      } else if (value.toString().contains("Unauthorized")) {
         showError = true;
-        errorMessage =  "Username and password doesn't match";
+        errorMessage = "Username and password doesn't match";
         loading = false;
       } else {
         showError = true;
-        errorMessage =  "Something went wrong, please check your network and try again";
+        errorMessage =
+            "Something went wrong, please check your network and try again";
         loading = false;
       }
-
     } catch (e) {
       showError = true;
-      errorMessage =  "Something went wrong, please check your network and try again";
+      errorMessage =
+          "Something went wrong, please check your network and try again";
       loading = false;
-      FLog.info(text:e.toString());
+      FLog.info(text: e.toString());
     }
   }
 
   @action
-  login() async{
+  login() async {
     loading = true;
     success = false;
     loggedIn = false;
-    AuthServices.login(username, password, rememberMe).then((v)=>_loggedin(v));
+    AuthServices.login(username, password, rememberMe)
+        .then((v) => _loggedin(v));
   }
 
   @action
   Future forgotPassword() async {
     loading = true;
   }
-  
+
   @action
-  Future logout() async {
+  Future<void> logout() async {
     loading = true;
-    //await AuthServices.logout();
+    AuthServices.logout();
     NavigationServices.navigateTo(AppsRoutes.login);
     loading = false;
   }
@@ -189,4 +199,5 @@ abstract class _AuthenticationStore with Store {
     await AdminServices.systemMetrics(); */
   }
 
+  dispose() {}
 }

@@ -1,3 +1,4 @@
+import 'package:kutilang_example/store/auth_store/auth_store.dart';
 import 'package:provider/provider.dart';
 import '../services/apps_routes.dart';
 import '../store/app_store/app_store.dart';
@@ -26,6 +27,10 @@ class MainModule implements Module {
   providers() => [
         Provider<AppStore>(
           create: (_) => AppStore(),
+          dispose: (_, store) => store.dispose(),
+        ),
+         Provider<AuthStore>(
+          create: (_) => AuthStore(),
           dispose: (_, store) => store.dispose(),
         ),
       ];

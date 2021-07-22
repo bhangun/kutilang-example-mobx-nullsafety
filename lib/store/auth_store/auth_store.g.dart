@@ -8,37 +8,37 @@ part of 'auth_store.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
-mixin _$AuthenticationStore on _AuthenticationStore, Store {
+mixin _$AuthStore on _AuthStore, Store {
   Computed<bool>? _$canForgetPasswordComputed;
 
   @override
   bool get canForgetPassword => (_$canForgetPasswordComputed ??= Computed<bool>(
           () => super.canForgetPassword,
-          name: '_AuthenticationStore.canForgetPassword'))
+          name: '_AuthStore.canForgetPassword'))
       .value;
   Computed<bool>? _$hasErrorsInLoginComputed;
 
   @override
   bool get hasErrorsInLogin => (_$hasErrorsInLoginComputed ??= Computed<bool>(
           () => super.hasErrorsInLogin,
-          name: '_AuthenticationStore.hasErrorsInLogin'))
+          name: '_AuthStore.hasErrorsInLogin'))
       .value;
   Computed<bool>? _$hasErrorsInRegisterComputed;
 
   @override
   bool get hasErrorsInRegister => (_$hasErrorsInRegisterComputed ??=
           Computed<bool>(() => super.hasErrorsInRegister,
-              name: '_AuthenticationStore.hasErrorsInRegister'))
+              name: '_AuthStore.hasErrorsInRegister'))
       .value;
   Computed<bool>? _$hasErrorInForgotPasswordComputed;
 
   @override
   bool get hasErrorInForgotPassword => (_$hasErrorInForgotPasswordComputed ??=
           Computed<bool>(() => super.hasErrorInForgotPassword,
-              name: '_AuthenticationStore.hasErrorInForgotPassword'))
+              name: '_AuthStore.hasErrorInForgotPassword'))
       .value;
 
-  final _$usernameAtom = Atom(name: '_AuthenticationStore.username');
+  final _$usernameAtom = Atom(name: '_AuthStore.username');
 
   @override
   String get username {
@@ -53,7 +53,7 @@ mixin _$AuthenticationStore on _AuthenticationStore, Store {
     });
   }
 
-  final _$userMessageAtom = Atom(name: '_AuthenticationStore.userMessage');
+  final _$userMessageAtom = Atom(name: '_AuthStore.userMessage');
 
   @override
   String get userMessage {
@@ -68,7 +68,7 @@ mixin _$AuthenticationStore on _AuthenticationStore, Store {
     });
   }
 
-  final _$passwordAtom = Atom(name: '_AuthenticationStore.password');
+  final _$passwordAtom = Atom(name: '_AuthStore.password');
 
   @override
   String get password {
@@ -83,8 +83,7 @@ mixin _$AuthenticationStore on _AuthenticationStore, Store {
     });
   }
 
-  final _$passwordMessageAtom =
-      Atom(name: '_AuthenticationStore.passwordMessage');
+  final _$passwordMessageAtom = Atom(name: '_AuthStore.passwordMessage');
 
   @override
   String get passwordMessage {
@@ -99,8 +98,7 @@ mixin _$AuthenticationStore on _AuthenticationStore, Store {
     });
   }
 
-  final _$confirmPasswordAtom =
-      Atom(name: '_AuthenticationStore.confirmPassword');
+  final _$confirmPasswordAtom = Atom(name: '_AuthStore.confirmPassword');
 
   @override
   String get confirmPassword {
@@ -116,7 +114,7 @@ mixin _$AuthenticationStore on _AuthenticationStore, Store {
   }
 
   final _$confirmPasswordMessageAtom =
-      Atom(name: '_AuthenticationStore.confirmPasswordMessage');
+      Atom(name: '_AuthStore.confirmPasswordMessage');
 
   @override
   String get confirmPasswordMessage {
@@ -132,7 +130,7 @@ mixin _$AuthenticationStore on _AuthenticationStore, Store {
     });
   }
 
-  final _$successAtom = Atom(name: '_AuthenticationStore.success');
+  final _$successAtom = Atom(name: '_AuthStore.success');
 
   @override
   bool get success {
@@ -147,7 +145,7 @@ mixin _$AuthenticationStore on _AuthenticationStore, Store {
     });
   }
 
-  final _$loggedInAtom = Atom(name: '_AuthenticationStore.loggedIn');
+  final _$loggedInAtom = Atom(name: '_AuthStore.loggedIn');
 
   @override
   bool get loggedIn {
@@ -162,7 +160,7 @@ mixin _$AuthenticationStore on _AuthenticationStore, Store {
     });
   }
 
-  final _$loadingAtom = Atom(name: '_AuthenticationStore.loading');
+  final _$loadingAtom = Atom(name: '_AuthStore.loading');
 
   @override
   bool get loading {
@@ -177,7 +175,7 @@ mixin _$AuthenticationStore on _AuthenticationStore, Store {
     });
   }
 
-  final _$rememberMeAtom = Atom(name: '_AuthenticationStore.rememberMe');
+  final _$rememberMeAtom = Atom(name: '_AuthStore.rememberMe');
 
   @override
   bool get rememberMe {
@@ -192,7 +190,7 @@ mixin _$AuthenticationStore on _AuthenticationStore, Store {
     });
   }
 
-  final _$errorMessageAtom = Atom(name: '_AuthenticationStore.errorMessage');
+  final _$errorMessageAtom = Atom(name: '_AuthStore.errorMessage');
 
   @override
   String get errorMessage {
@@ -207,7 +205,7 @@ mixin _$AuthenticationStore on _AuthenticationStore, Store {
     });
   }
 
-  final _$showErrorAtom = Atom(name: '_AuthenticationStore.showError');
+  final _$showErrorAtom = Atom(name: '_AuthStore.showError');
 
   @override
   bool get showError {
@@ -222,82 +220,80 @@ mixin _$AuthenticationStore on _AuthenticationStore, Store {
     });
   }
 
-  final _$registerAsyncAction = AsyncAction('_AuthenticationStore.register');
+  final _$registerAsyncAction = AsyncAction('_AuthStore.register');
 
   @override
   Future<dynamic> register() {
     return _$registerAsyncAction.run(() => super.register());
   }
 
-  final _$gotoHomeAsyncAction = AsyncAction('_AuthenticationStore.gotoHome');
+  final _$gotoHomeAsyncAction = AsyncAction('_AuthStore.gotoHome');
 
   @override
   Future<dynamic> gotoHome() {
     return _$gotoHomeAsyncAction.run(() => super.gotoHome());
   }
 
-  final _$loginAsyncAction = AsyncAction('_AuthenticationStore.login');
+  final _$loginAsyncAction = AsyncAction('_AuthStore.login');
 
   @override
   Future login() {
     return _$loginAsyncAction.run(() => super.login());
   }
 
-  final _$forgotPasswordAsyncAction =
-      AsyncAction('_AuthenticationStore.forgotPassword');
+  final _$forgotPasswordAsyncAction = AsyncAction('_AuthStore.forgotPassword');
 
   @override
   Future<dynamic> forgotPassword() {
     return _$forgotPasswordAsyncAction.run(() => super.forgotPassword());
   }
 
-  final _$logoutAsyncAction = AsyncAction('_AuthenticationStore.logout');
+  final _$logoutAsyncAction = AsyncAction('_AuthStore.logout');
 
   @override
-  Future<dynamic> logout() {
+  Future<void> logout() {
     return _$logoutAsyncAction.run(() => super.logout());
   }
 
-  final _$testAsyncAction = AsyncAction('_AuthenticationStore.test');
+  final _$testAsyncAction = AsyncAction('_AuthStore.test');
 
   @override
   Future<dynamic> test() {
     return _$testAsyncAction.run(() => super.test());
   }
 
-  final _$_AuthenticationStoreActionController =
-      ActionController(name: '_AuthenticationStore');
+  final _$_AuthStoreActionController = ActionController(name: '_AuthStore');
 
   @override
   void setUserId(String value) {
-    final _$actionInfo = _$_AuthenticationStoreActionController.startAction(
-        name: '_AuthenticationStore.setUserId');
+    final _$actionInfo =
+        _$_AuthStoreActionController.startAction(name: '_AuthStore.setUserId');
     try {
       return super.setUserId(value);
     } finally {
-      _$_AuthenticationStoreActionController.endAction(_$actionInfo);
+      _$_AuthStoreActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void setPassword(String value) {
-    final _$actionInfo = _$_AuthenticationStoreActionController.startAction(
-        name: '_AuthenticationStore.setPassword');
+    final _$actionInfo = _$_AuthStoreActionController.startAction(
+        name: '_AuthStore.setPassword');
     try {
       return super.setPassword(value);
     } finally {
-      _$_AuthenticationStoreActionController.endAction(_$actionInfo);
+      _$_AuthStoreActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void setConfirmPassword(String value) {
-    final _$actionInfo = _$_AuthenticationStoreActionController.startAction(
-        name: '_AuthenticationStore.setConfirmPassword');
+    final _$actionInfo = _$_AuthStoreActionController.startAction(
+        name: '_AuthStore.setConfirmPassword');
     try {
       return super.setConfirmPassword(value);
     } finally {
-      _$_AuthenticationStoreActionController.endAction(_$actionInfo);
+      _$_AuthStoreActionController.endAction(_$actionInfo);
     }
   }
 

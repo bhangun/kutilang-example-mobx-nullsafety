@@ -12,6 +12,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'generated/localization.dart';
@@ -22,7 +23,6 @@ import 'store/settings_store/settings_store.dart';
 import 'utils/config.dart';
 import 'utils/modules/modules_registry.dart';
 import 'utils/routes.dart';
-
 
 Future<void> main() async {
   // Initialized

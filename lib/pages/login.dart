@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:kutilang_example/services/apps_routes.dart';
 import 'package:provider/provider.dart';
 
+import '../services/apps_routes.dart';
+import '../store/auth_store/auth_store.dart';
 import '../generated/localization.dart';
 import '../layout/mobile.dart';
 import '../modules/kojek/ko_routes.dart';
 import '../services/navigation.dart';
-import '../store/app_store/app_store.dart';
 import '../store/settings_store/settings_store.dart';
 import '../utils/config.dart';
 import '../widgets/textfield_widget.dart';
@@ -31,7 +32,7 @@ class _Loginpagestate extends State<LoginScreen> {
   bool _isEyeOpen = true;
 
   bool _isObscure = true;
-  final _appStore = AppStore();
+  var _authStore = AuthStore();
 
   @override
   void initState() {
@@ -40,11 +41,11 @@ class _Loginpagestate extends State<LoginScreen> {
 
     _userEmailController.addListener(() {
       // this will be called whenever user types in some value
-      // context.read<AuthBloc>().setUserId(_userEmailController.text);
+      _authStore.setUserId(_userEmailController.text);
     });
     _passwordController.addListener(() {
       //this will be called whenever user types in some value
-      // context.read<AuthBloc>().setPassword(_passwordController.text);
+      _authStore.setPassword(_passwordController.text);
     });
   }
 
@@ -59,75 +60,71 @@ class _Loginpagestate extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<SettingsStore>(builder: (_, store, __) {
-      return Scaffold(
-          primary: true,
-          appBar: AppBar(
-              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-              elevation: 0,
-              actions: [
-                IconButton(
-                  splashRadius: 15,
-                  color: Theme.of(context).buttonColor,
-                  icon: Icon(Icons.pedal_bike),
-                  onPressed: () =>
-                      NavigationServices.navigateTo(KoRoutes.koHome),
-                ),
-                IconButton(
-                  splashRadius: 15,
-                  color: Theme.of(context).buttonColor,
-                  icon: Icon(Icons.info),
-                  onPressed: () =>
-                      NavigationServices.navigateTo(AppsRoutes.about),
-                ),
-                IconButton(
+   // _authStore = Provider.of<AuthStore>(context);
+    final store = Provider.of<SettingsStore>(context);
+    return Observer(
+        builder: (_) => Scaffold(
+            primary: true,
+            appBar: AppBar(
+                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                elevation: 0,
+                actions: [
+                  IconButton(
                     splashRadius: 15,
                     color: Theme.of(context).buttonColor,
-                    icon: Icon(Icons.brightness_6),
-                    onPressed: () => store.switchTheme() //.toggleTheme(),
-                    ),
-                IconButton(
+                    icon: Icon(Icons.pedal_bike),
+                    onPressed: () =>
+                        NavigationServices.navigateTo(KoRoutes.koHome),
+                  ),
+                  IconButton(
                     splashRadius: 15,
                     color: Theme.of(context).buttonColor,
-                    icon: Icon(Icons.flag),
-                    onPressed: () => _showLocales(store)),
-              ]),
-          body: _body(context));
-    }
-        //)
-        );
+                    icon: Icon(Icons.info),
+                    onPressed: () =>
+                        NavigationServices.navigateTo(AppsRoutes.about),
+                  ),
+                  IconButton(
+                      splashRadius: 15,
+                      color: Theme.of(context).buttonColor,
+                      icon: Icon(Icons.brightness_6),
+                      onPressed: () => store.switchTheme()),
+                  IconButton(
+                      splashRadius: 15,
+                      color: Theme.of(context).buttonColor,
+                      icon: Icon(Icons.flag),
+                      onPressed: () => _showLocales(store)),
+                ]),
+            body: _body(context)));
   }
 
-  _body(BuildContext context) {
-    return Material(
-        key: _formKey,
-        child: MobileLayout(
-          rightChild: Column(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              SvgPicture.asset(
-                IMAGE_SPLASH,
-                width: 60,
-                height: 60,
-              ),
-              SizedBox(height: 24.0),
-              _userIdField(),
-              _passwordField(),
-              _forgotPasswordButton(),
-              _signInButton(),
-            ],
-          ),
-          leftChild: SizedBox.expand(
-              child: SvgPicture.asset(
-            IMAGE_SPLASH,
-            width: 100,
-            height: 100,
-          )),
-          showProgress: false,
-        ));
-  }
+  _body(BuildContext context) => Material(
+      key: _formKey,
+      child: MobileLayout(
+        rightChild: Column(
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            SvgPicture.asset(
+              IMAGE_SPLASH,
+              width: 60,
+              height: 60,
+            ),
+            SizedBox(height: 24.0),
+            _userIdField(),
+            _passwordField(),
+            _forgotPasswordButton(),
+            _signInButton(),
+          ],
+        ),
+        leftChild: SizedBox.expand(
+            child: SvgPicture.asset(
+          IMAGE_SPLASH,
+          width: 100,
+          height: 100,
+        )),
+        showProgress: false,
+      ));
 
   Widget _userIdField() => TextFieldWidget(
         hint: AppLocalizations.of(context)!.email,
@@ -139,9 +136,8 @@ class _Loginpagestate extends State<LoginScreen> {
         onFieldSubmitted: (value) {
           FocusScope.of(context).requestFocus(_passwordFocusNode);
         },
-        errorText: _appStore.userMessage,
+        errorText: _authStore.userMessage,
       );
-  //});
 
   Widget _passwordField() => TextFieldWidget(
         hint: AppLocalizations.of(context)!.password,
@@ -151,7 +147,7 @@ class _Loginpagestate extends State<LoginScreen> {
         iconColor: Colors.black54,
         textController: _passwordController,
         focusNode: _passwordFocusNode,
-        errorText: _appStore.passwordMessage,
+        errorText: _authStore.passwordMessage,
         onEyePressed: () => _onEyePressed(),
         isEyeOpen: _isEyeOpen,
         showEye: true,
@@ -163,11 +159,11 @@ class _Loginpagestate extends State<LoginScreen> {
       child: TextButton(
           key: Key('user_forgot_password'),
           child: Text(AppLocalizations.of(context)!.forgotPassword!),
-          onPressed: () => _appStore.forgotPassword()));
+          onPressed: () => _authStore.forgotPassword()));
 
   Widget _signInButton() => ElevatedButton(
         key: Key('user_sign_button'),
-        onPressed: () => _appStore.login(),
+        onPressed: () => _authStore.login(),
         child: Text(AppLocalizations.of(context)!.sign_in!),
       );
 
@@ -193,10 +189,8 @@ class _Loginpagestate extends State<LoginScreen> {
         });
   }
 
-  _localeBtn(title, key, store) {
-    return TextButton(
-        child: Text(title), onPressed: () => {store.switchLocale(key)});
-  }
+  _localeBtn(title, key, store) =>
+      TextButton(child: Text(title), onPressed: () => store.switchLocale(key));
 
   _showModal(text) {
     return ScaffoldMessenger.of(context).showSnackBar(SnackBar(

@@ -29,12 +29,11 @@ class RestServices {
           } catch (e) {
             FLog.info(text: e.toString());
           }
+          requestHandler.next(options);
         },
         onResponse:
             (Response<dynamic> e, ResponseInterceptorHandler responseHandler) =>
-                {FLog.info(text: '+++++++++++++++++++++++')
-                  //FLog.info(text: e.toString());
-                  },
+                {responseHandler.next(e)},
         onError: (DioError error, ErrorInterceptorHandler errorHandler) async {
           FLog.info(text: DioErrorUtil.handleError(error));
           // Do something with response error
@@ -59,12 +58,7 @@ class RestServices {
 
   // Post:----------------------------------------------------------------------
   static Future<dynamic> post(String uri, dynamic data) async {
-    FLog.info(text: uri + data);
-    
-    _dio.post(uri, data: data).then((value) => print(value.data.toString()));
-
     Response response = await _dio.post(uri, data: data);
-    FLog.info(text: response.data.toString());
     return response.data;
   }
 

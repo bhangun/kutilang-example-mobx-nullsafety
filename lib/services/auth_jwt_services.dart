@@ -20,7 +20,7 @@ class AuthServices {
       "rememberMe": _rememberMe
     });
 
-    FLog.info(text: '<><><>><><><1><><>><><><');
+    FLog.info(text: '<><><>><><><1><><>><><><'+body);
     // bool result = false;
     // try {
     FLog.info(text: '<><><>><><><1><1><>><><><');
