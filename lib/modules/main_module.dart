@@ -9,30 +9,26 @@ class MainModule implements Module {
   String? name = 'Main';
 
   @override
-  pages() {
-    return [
-      Page(title: 'User Detail', route: UserRoutes.userDetail),
-      Page(title: 'User Form', route: UserRoutes.userForm),
-      Page(
-          title: 'User List',
-          route: UserRoutes.userList,
-          showInDrawer: true,
-          showInHome: true)
-    ];
-  }
+  pages() => [
+        Page(title: 'User Detail', route: UserRoutes.userDetail),
+        Page(title: 'User Form', route: UserRoutes.userForm),
+        Page(
+            title: 'User List',
+            route: UserRoutes.userList,
+            showInDrawer: true,
+            showInHome: true)
+      ];
 
   @override
   services() {}
 
   @override
-  providers() {
-    return [
-      Provider<AppStore>(
-        create: (_) => AppStore(),
-        dispose: (_, store) => store.dispose(),
-      ),
-    ];
-  }
+  providers() => [
+        Provider<AppStore>(
+          create: (_) => AppStore(),
+          dispose: (_, store) => store.dispose(),
+        ),
+      ];
 
   @override
   routes() => [AppsRoutes.routes, UserRoutes.routes];
