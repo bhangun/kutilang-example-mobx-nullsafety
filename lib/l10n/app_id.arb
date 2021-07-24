@@ -10,5 +10,12 @@
     "delete": "Hapus",
     "share": "Sebar",
     "add": "Tambah",
-    "data_empty": "Data Kosong"
+    "data_empty": "Data Kosong",
+    "passwordConfirm": "Sandi tidak boleh kosong",
+    "passwordMatch": "Sandi tidak cocok",
+    "passwordEmpty": "Sandi tidak boleh kosong",
+    "passwordLength": "Sandi minimal 6 karakter",
+    "errorUsername":"Nama User dan sandi tidak cocok",
+    "errorUnauthorized": "Anda tidak memiliki otoritas",
+    "errorNetwork": "Sesuatu terjadi pada jaringan, silahkan periksa jaringan"
 }

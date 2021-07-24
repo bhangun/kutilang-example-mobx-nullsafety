@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 
 class User extends Equatable {
   User(
-      {required this.id,
+      { this.id,
       this.login,
       this.firstName,
       this.lastName,
@@ -18,7 +18,7 @@ class User extends Equatable {
       this.lastModifiedDate})
       : super();
 
-  final int id;
+  final int? id;
   final String? login;
   final String? firstName;
   final String? lastName;
@@ -83,7 +83,8 @@ class User extends Equatable {
 
   @override
   List<Object> get props =>
-      [id, login!, firstName!, lastName!, email!, authorities!, langKey!];
+      [/* login, firstName!, lastName!, email!, authorities!, langKey! */];
+
 }
 
 class UserList {

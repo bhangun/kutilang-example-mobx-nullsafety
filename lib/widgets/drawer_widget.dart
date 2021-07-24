@@ -1,12 +1,13 @@
 // import 'package:f_logs/f_logs.dart';
 import 'package:flutter/material.dart';
+import 'package:kutilang_example/modules/account/services/user_routes.dart';
 
-class CommonDrawer extends StatefulWidget {
+class KutDrawer extends StatefulWidget {
   @override
-  _CommonDrawerState createState() => _CommonDrawerState();
+  _KutDrawerState createState() => _KutDrawerState();
 }
 
-class _CommonDrawerState extends State<CommonDrawer> {
+class _KutDrawerState extends State<KutDrawer> {
   //String _firstName = '';
   //String _email = '';
 
@@ -47,14 +48,14 @@ class _CommonDrawerState extends State<CommonDrawer> {
           Icons.person,
           color: Colors.blue,
         ),
-        // onTap: () => Navigator.pushReplacementNamed(context, UserRoutes.userList),
+         onTap: () => Navigator.pushReplacementNamed(context, path),
       );
 
   _listMenu(BuildContext context) {
     var list = <Widget>[];
     list.add(_header(""));
     list.add(_listTitle("Register", context,"/users"));
-    list.add(_listTitle("User", context,"/users"));
+    list.add(_listTitle("User", context,UserRoutes.userList));
     list.add(_listTitle("Dashboard", context,"/dashboard"));
     // kutilang-needle-add-drawer - Don't remove, used by kutilang to add new list
     list.add(_listTitle("Logout", context,"/login"));

@@ -61,7 +61,6 @@ class _Loginpagestate extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-   // _authStore = Provider.of<AuthStore>(context);
     final store = Provider.of<SettingsStore>(context);
     return Observer(
         builder: (_) => Scaffold(
@@ -95,7 +94,11 @@ class _Loginpagestate extends State<LoginScreen> {
                       icon: Icon(Icons.flag),
                       onPressed: () => _showLocales(store)),
                 ]),
-            body: _body(context)));
+            body: Stack(children: [
+             // _authStore.showError ? _showModal(_message()) : 
+              Container(child:Text(_message())),
+              _body(context)
+            ])));
   }
 
   _body(BuildContext context) => Material(
@@ -153,7 +156,17 @@ class _Loginpagestate extends State<LoginScreen> {
         isEyeOpen: _isEyeOpen,
         showEye: true,
       );
-  //  });
+
+  String _message() {
+    switch (_authStore.errorMessage) {
+      case "unauthorized":
+        return AppLocalizations.of(context)!.errorUnauthorized;
+      case "username":
+        return AppLocalizations.of(context)!.errorUsername;
+      default:
+        return AppLocalizations.of(context)!.errorNetwork;
+    }
+  }
 
   Widget _forgotPasswordButton() => Align(
       alignment: FractionalOffset.centerRight,
@@ -165,7 +178,7 @@ class _Loginpagestate extends State<LoginScreen> {
   Widget _signInButton() => ElevatedButton(
         key: Key('user_sign_button'),
         onPressed: () => _authStore.login(),
-        child: Text(AppLocalizations.of(context)!.sign_in),
+        child: Text(AppLocalizations.of(context)!.sign_in+'-'+_message()),
       );
 
   _onEyePressed() {

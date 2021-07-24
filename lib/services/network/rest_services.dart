@@ -12,30 +12,25 @@ class RestServices {
     ..options.receiveTimeout = TIMEOUT_RECEIVE
     ..interceptors.clear()
     ..interceptors.add(LogInterceptor(
-        requestBody: true,
-        request: true,
-        requestHeader: true,
-        responseHeader: true,
+        requestBody: false,
+        request: false,
+        requestHeader: false,
+        responseHeader: false,
         responseBody: true))
     ..interceptors.add(InterceptorsWrapper(
         onRequest: (RequestOptions options,
             RequestInterceptorHandler requestHandler) async {
-          FLog.info(text: options.baseUrl.toString());
-          try {
-            String token = (await AuthServices.fetchToken());
-            if (token != '') {
-              options.headers["Authorization"] = "Bearer " + token;
-            }
-          } catch (e) {
-            FLog.info(text: e.toString());
-          }
+         // String token = await 
+          AuthServices.fetchToken().then((token) => 
+          {if (token != '') options.headers["Authorization"] = "Bearer " + token});
+
           requestHandler.next(options);
         },
         onResponse:
             (Response<dynamic> e, ResponseInterceptorHandler responseHandler) =>
                 {responseHandler.next(e)},
-        onError: (DioError error, ErrorInterceptorHandler errorHandler) async {
-          FLog.info(text: DioErrorUtil.handleError(error));
+        onError: (DioError error, ErrorInterceptorHandler errorHandler) {
+          FLog.error(text: DioErrorUtil.handleError(error));
           // Do something with response error
           if (error.response?.statusCode == 403) {
             // requestLock.lock()-> If no token, request token firstly and lock this interceptor
@@ -43,44 +38,33 @@ class RestServices {
             _dio.interceptors.requestLock.lock();
             _dio.interceptors.responseLock.lock();
           }
+          errorHandler.next(error);
         }));
 
-  // Get:-----------------------------------------------------------------------
+  // GET
   static Future<dynamic> fetch(String uri) async {
-    try {
-      Response response = await _dio.get(uri);
-      return response.data;
-    } catch (e) {
-      FLog.error(text: e.toString());
-      throw e;
-    }
-  }
-
-  // Post:----------------------------------------------------------------------
-  static Future<dynamic> post(String uri, dynamic data) async {
-    Response response = await _dio.post(uri, data: data);
+    Response response = await _dio.get(uri);
     return response.data;
   }
 
-  // Post:----------------------------------------------------------------------
-  static Future<dynamic> delete(String uri, dynamic id) async {
-    try {
-      Response response = await _dio.delete(uri, data: id);
-      return response.data;
-    } catch (e) {
-      FLog.error(text: e.toString());
-      throw e;
-    }
+  // POST
+  static Future<dynamic> post(String uri, dynamic data) async {
+    Object response = await _dio
+        .post(uri, data: data)
+        .then((value) => value.data)
+        .onError((error, stackTrace) => error.toString());
+    return response;
   }
 
-  // Post:----------------------------------------------------------------------
+  // DELETE
+  static Future<dynamic> delete(String uri, dynamic id) async {
+    Response response = await _dio.delete(uri, data: id);
+    return response.data;
+  }
+
+  // PUT
   static Future<dynamic> put(String uri, dynamic data) async {
-    try {
-      Response response = await _dio.put(uri, data: data);
-      return response.data;
-    } catch (e) {
-      // FLog.error(text: e.toString());
-      throw e;
-    }
+    Response response = await _dio.put(uri, data: data);
+    return response.data;
   }
 }

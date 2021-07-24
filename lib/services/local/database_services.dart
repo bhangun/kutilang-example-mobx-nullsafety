@@ -36,13 +36,15 @@ class DatabaseServices {
   Future<String> fetchToken() async {
     final finder = Finder(filter: Filter.byKey(0));
     Map<String, Object?> value = {'id_token': ''};
+    String token = '';
     try {
       var v = (await _appsStore.find(await _db, finder: finder)).first;
       value = v.value;
+      token = value['id_token'].toString();
     } catch (e) {
       //FLog.info(text: '++++++++++>' + value.toString());
     }
-    return value['id_token'].toString();
+    return token;
   }
 
   // DB functions:--------------------------------------------------------------

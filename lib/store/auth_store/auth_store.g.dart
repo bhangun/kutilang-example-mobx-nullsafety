@@ -220,6 +220,13 @@ mixin _$AuthStore on _AuthStore, Store {
     });
   }
 
+  final _$loginAsyncAction = AsyncAction('_AuthStore.login');
+
+  @override
+  Future login() {
+    return _$loginAsyncAction.run(() => super.login());
+  }
+
   final _$registerAsyncAction = AsyncAction('_AuthStore.register');
 
   @override
@@ -234,13 +241,6 @@ mixin _$AuthStore on _AuthStore, Store {
     return _$gotoHomeAsyncAction.run(() => super.gotoHome());
   }
 
-  final _$loginAsyncAction = AsyncAction('_AuthStore.login');
-
-  @override
-  Future login() {
-    return _$loginAsyncAction.run(() => super.login());
-  }
-
   final _$forgotPasswordAsyncAction = AsyncAction('_AuthStore.forgotPassword');
 
   @override
@@ -253,13 +253,6 @@ mixin _$AuthStore on _AuthStore, Store {
   @override
   Future<void> logout() {
     return _$logoutAsyncAction.run(() => super.logout());
-  }
-
-  final _$testAsyncAction = AsyncAction('_AuthStore.test');
-
-  @override
-  Future<dynamic> test() {
-    return _$testAsyncAction.run(() => super.test());
   }
 
   final _$_AuthStoreActionController = ActionController(name: '_AuthStore');

@@ -41,7 +41,7 @@ abstract class _AuthStore with Store {
   bool rememberMe = false;
 
   @observable
-  String errorMessage = 'error';
+  String errorMessage = '';
 
   @observable
   bool showError = false;
@@ -97,7 +97,7 @@ abstract class _AuthStore with Store {
         "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
         ")+";
 
-    String p2 ="^[_.@A-Za-z0-9-]*\$" ;
+    String p2 = "^[_.@A-Za-z0-9-]*\$";
 
     RegExp regExp = new RegExp(p);
 
@@ -132,6 +132,33 @@ abstract class _AuthStore with Store {
     //notifyListeners();
   }
 
+
+  @action
+  login() async {
+    loading = true;
+    success = false;
+    AuthServices.login(username, password, rememberMe)
+        .then((v) => _loggedin(v));
+  }
+
+  void _loggedin(value) {
+      if (value=='SUCCESS') {
+        FLog.info(text: "Success login!");
+        loggedIn = true;
+        loading = false;
+        success = true;
+        NavigationServices.navigateTo(AppsRoutes.home);
+      } else if (value.toString().contains("[401]")) {
+        showError = true;
+        loading = false;
+        errorMessage = "unauthorized";
+      } else if (value.toString().contains("[400]"))  {
+        showError = true;
+        loading = false;
+        errorMessage = "username";
+      }
+  }
+
   @action
   Future register() async {
     loading = true;
@@ -139,44 +166,7 @@ abstract class _AuthStore with Store {
 
   @action
   Future gotoHome() async {
-    FLog.info(text: "Redirect to home!");
     if (loggedIn) NavigationServices.navigateTo(AppsRoutes.home);
-  }
-
-  void _loggedin(value) {
-    try {
-      if (value) {
-        FLog.info(text: "Success login!");
-        NavigationServices.navigateTo(AppsRoutes.home);
-        loggedIn = true;
-        loading = false;
-        success = true;
-      } else if (value.toString().contains("Unauthorized")) {
-        showError = true;
-        errorMessage = "Username and password doesn't match";
-        loading = false;
-      } else {
-        showError = true;
-        errorMessage =
-            "Something went wrong, please check your network and try again";
-        loading = false;
-      }
-    } catch (e) {
-      showError = true;
-      errorMessage =
-          "Something went wrong, please check your network and try again";
-      loading = false;
-      FLog.info(text: e.toString());
-    }
-  }
-
-  @action
-  login() async {
-    loading = true;
-    success = false;
-    loggedIn = false;
-    AuthServices.login(username, password, rememberMe)
-        .then((v) => _loggedin(v));
   }
 
   @action
@@ -190,13 +180,6 @@ abstract class _AuthStore with Store {
     AuthServices.logout();
     NavigationServices.navigateTo(AppsRoutes.login);
     loading = false;
-  }
-
-  @action
-  Future test() async {
-    /* await AdminServices.systemHealth();
-    await AdminServices.getLoggers();
-    await AdminServices.systemMetrics(); */
   }
 
   dispose() {}

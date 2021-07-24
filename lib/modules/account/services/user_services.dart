@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:f_logs/f_logs.dart';
 import 'package:kutilang_example/utils/helper.dart';
 import 'package:logging/logging.dart';
 
@@ -44,7 +45,9 @@ class UserServices {
 
   // Fetch all user
   static Future<List<User>> users([var page, var size, var sort]) async {
+    FLog.info(text: '--------1--------');
     List<dynamic> data = await RestServices.fetch(API_USERS);
+    FLog.info(text: '--------2--------');
     return User.listFromJson(data);
   }
 

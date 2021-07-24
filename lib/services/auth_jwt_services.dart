@@ -3,16 +3,13 @@ import 'dart:convert';
 
 import 'package:f_logs/f_logs.dart';
 
-//import '../utils/config.dart';
 import 'local/database_services.dart';
-//import 'local/local_storage.dart';
 import 'network/rest_services.dart';
 
 class AuthServices {
-
   /// Path authenticate,
   /// Post authorize & Get isAuthorize
-  static Future<bool> login(String _username, String _password,
+  static Future<String> login(String _username, String _password,
       [bool _rememberMe = false]) async {
     var body = jsonEncode({
       "username": _username,
@@ -20,36 +17,14 @@ class AuthServices {
       "rememberMe": _rememberMe
     });
 
-    FLog.info(text: '<><><>><><><1><><>><><><'+body);
-    // bool result = false;
-    // try {
-    FLog.info(text: '<><><>><><><1><1><>><><><');
-
-    /*  RestServices.post('authenticate', body).then((d) => _saveToken(d),
-          onError: (e) => {FLog.info(text: e.toString())});
- */
-
     var data = await RestServices.post('authenticate', body);
-    FLog.info(text: data.toString());
-    return _saveToken(data);
-    
-    //  return true;
-    //   FLog.info(text: '<><><>><><><2><><>><><><');
-
-    /* if (await DatabaseServices.db.fetchToken()!='') {
-        //result = true;
-        _controller.add(AuthStatus.authenticated);
-        FLog.info(text: "Token saved!");
-      } */
-    /*  } catch (e) {
-      FLog.info(text: '<><><>><><><3><><>><><><');
-      result = true;
-
-      FLog.error(text: e.toString());
-    } */
-    //FLog.info(text: '<><><>><><><4><><>><><><');
-    //_controller.close();
-    // return result;
+    if (data.runtimeType.toString() ==
+        '_InternalLinkedHashMap<String, dynamic>') {
+      String _token = data['id_token'];
+      DatabaseServices.db.token(_token);
+      return "SUCCESS";
+    } else
+      return data;
   }
 
   static Future<String> fetchToken() async {
@@ -59,19 +34,7 @@ class AuthServices {
 
   static void logout() {
     FLog.debug(text: 'logout');
-    // AppStorage.delete(AUTH_TOKEN);
     DatabaseServices.db.deleteToken();
-  }
-
-  static bool _saveToken(token) {
-    FLog.info(text: token.toString());
-    String _token = token['id_token'];
-    if (_token != '') {
-      DatabaseServices.db.token(_token);
-      //AppStorage.put(AUTH_TOKEN, _token);
-      return true;
-    } else
-      return false;
   }
 
   /// changePassword
