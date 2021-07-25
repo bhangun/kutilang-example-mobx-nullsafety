@@ -4,6 +4,8 @@ import 'package:f_logs/f_logs.dart';
 import '../../services/apps_routes.dart';
 import '../../services/auth_jwt_services.dart';
 import '../../services/navigation.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 part 'auth_store.g.dart';
 
@@ -14,7 +16,7 @@ abstract class _AuthStore with Store {
   String username = '';
 
   @observable
-  String userMessage = '';
+  String loginMessage = '';
 
   @observable
   String password = '';
@@ -102,20 +104,20 @@ abstract class _AuthStore with Store {
     RegExp regExp = new RegExp(p);
 
     if (value.isEmpty) {
-      userMessage = "Email can't be empty";
+      loginMessage = "empty";
     } else if (regExp.hasMatch(value)) {
-      userMessage = 'Please enter a valid email address';
+      loginMessage = 'username';
     } else {
       showError = true;
-      errorMessage = 'Email provided isn\'t valid.Try another email address';
+      loginMessage = 'unauthorized';
     }
   }
 
   void _validatePassword(String value) {
     if (value.isEmpty) {
-      passwordMessage = "Password can't be empty";
+      passwordMessage = "empty";
     } else if (value.length < 6) {
-      passwordMessage = "Password must be at-least 6 characters long";
+      passwordMessage = "length";
     } else {
       passwordMessage = '';
     }
@@ -123,13 +125,39 @@ abstract class _AuthStore with Store {
 
   void _validateConfirmPassword(String value) {
     if (value.isEmpty) {
-      confirmPasswordMessage = "Confirm password can't be empty";
+      confirmPasswordMessage = "confirm";
     } else if (value != password) {
-      confirmPasswordMessage = "Password doesn't match";
+      confirmPasswordMessage = "match";
     } else {
       confirmPasswordMessage = '';
     }
     //notifyListeners();
+  }
+
+
+  String messagePassword(context){
+    switch (passwordMessage) {
+      case "confirm":
+        return AppLocalizations.of(context)!.passwordConfirm;
+      case "empty":
+        return AppLocalizations.of(context)!.passwordEmpty;
+      case "length":
+        return AppLocalizations.of(context)!.passwordLength;
+      case "match":
+        return AppLocalizations.of(context)!.passwordMatch;
+      default:
+        return "";
+    }
+  }
+  String message(context) {
+    switch (errorMessage) {
+      case "unauthorized":
+        return AppLocalizations.of(context)!.errorUnauthorized;
+      case "username":
+        return AppLocalizations.of(context)!.errorUsername;
+      default:
+        return AppLocalizations.of(context)!.errorNetwork;
+    }
   }
 
 
@@ -181,6 +209,7 @@ abstract class _AuthStore with Store {
     NavigationServices.navigateTo(AppsRoutes.login);
     loading = false;
   }
+
 
   dispose() {}
 }

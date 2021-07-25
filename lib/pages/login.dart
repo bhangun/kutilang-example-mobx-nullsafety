@@ -62,6 +62,7 @@ class _Loginpagestate extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final store = Provider.of<SettingsStore>(context);
+    final _authStore = Provider.of<AuthStore>(context);
     return Observer(
         builder: (_) => Scaffold(
             primary: true,
@@ -95,8 +96,9 @@ class _Loginpagestate extends State<LoginScreen> {
                       onPressed: () => _showLocales(store)),
                 ]),
             body: Stack(children: [
-             // _authStore.showError ? _showModal(_message()) : 
-              Container(child:Text(_message())),
+              _authStore.showError
+                  ? _showModal(_authStore.message(context))
+                  : Container(child: Text(_authStore.message(context))),
               _body(context)
             ])));
   }
@@ -140,7 +142,7 @@ class _Loginpagestate extends State<LoginScreen> {
         onFieldSubmitted: (value) {
           FocusScope.of(context).requestFocus(_passwordFocusNode);
         },
-        errorText: _authStore.userMessage,
+        errorText: _authStore.message(context),
       );
 
   Widget _passwordField() => TextFieldWidget(
@@ -151,22 +153,11 @@ class _Loginpagestate extends State<LoginScreen> {
         iconColor: Colors.black54,
         textController: _passwordController,
         focusNode: _passwordFocusNode,
-        errorText: _authStore.passwordMessage,
+        errorText: _authStore.messagePassword(context),
         onEyePressed: () => _onEyePressed(),
         isEyeOpen: _isEyeOpen,
         showEye: true,
       );
-
-  String _message() {
-    switch (_authStore.errorMessage) {
-      case "unauthorized":
-        return AppLocalizations.of(context)!.errorUnauthorized;
-      case "username":
-        return AppLocalizations.of(context)!.errorUsername;
-      default:
-        return AppLocalizations.of(context)!.errorNetwork;
-    }
-  }
 
   Widget _forgotPasswordButton() => Align(
       alignment: FractionalOffset.centerRight,
@@ -178,7 +169,9 @@ class _Loginpagestate extends State<LoginScreen> {
   Widget _signInButton() => ElevatedButton(
         key: Key('user_sign_button'),
         onPressed: () => _authStore.login(),
-        child: Text(AppLocalizations.of(context)!.sign_in+'-'+_message()),
+        child: Text(AppLocalizations.of(context)!.sign_in +
+            '-' +
+            _authStore.message(context)),
       );
 
   _onEyePressed() {
@@ -191,39 +184,35 @@ class _Loginpagestate extends State<LoginScreen> {
   _showLocales(store) {
     showModalBottomSheet<void>(
         context: context,
-        builder: (BuildContext context) {
-          return Container(
-              height: 200,
-              child: ListView(
-                children: [
-                  _localeBtn('Bahasa', 'ID', store),
-                  _localeBtn('English', 'EN', store),
-                ],
-              ));
-        });
+        builder: (BuildContext context) => Container(
+            height: 200,
+            child: ListView(
+              children: [
+                _localeBtn('Bahasa', 'ID', store),
+                _localeBtn('English', 'EN', store),
+              ],
+            )));
   }
 
   _localeBtn(title, key, store) =>
       TextButton(child: Text(title), onPressed: () => store.switchLocale(key));
 
-  _showModal(text) {
-    return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      action: SnackBarAction(
-        label: 'Action',
-        onPressed: () {
-          // Code to execute.
-        },
-      ),
-      content: Text(text),
-      duration: Duration(milliseconds: 1500),
-      width: 280.0, // Width of the SnackBar.
-      padding: EdgeInsets.symmetric(
-        horizontal: 8.0, // Inner padding for SnackBar content.
-      ),
-      behavior: SnackBarBehavior.floating,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-    ));
-  }
+  _showModal(text) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        action: SnackBarAction(
+          label: 'Action',
+          onPressed: () {
+            // Code to execute.
+          },
+        ),
+        content: Text(text),
+        duration: Duration(milliseconds: 1500),
+        width: 280.0, // Width of the SnackBar.
+        padding: EdgeInsets.symmetric(
+          horizontal: 8.0, // Inner padding for SnackBar content.
+        ),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+      ));
 }

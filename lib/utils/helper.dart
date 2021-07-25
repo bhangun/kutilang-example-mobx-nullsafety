@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'config.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 //
 setPrefs(String key,String value) {
@@ -36,4 +38,6 @@ Future<bool> isRole(String role) async {
 instantToDate(DateTime date){
   return DateTime.parse(date.toString().substring(0,date.toString().length-1));
 }
+
+
 

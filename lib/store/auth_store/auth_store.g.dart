@@ -53,18 +53,18 @@ mixin _$AuthStore on _AuthStore, Store {
     });
   }
 
-  final _$userMessageAtom = Atom(name: '_AuthStore.userMessage');
+  final _$loginMessageAtom = Atom(name: '_AuthStore.loginMessage');
 
   @override
-  String get userMessage {
-    _$userMessageAtom.reportRead();
-    return super.userMessage;
+  String get loginMessage {
+    _$loginMessageAtom.reportRead();
+    return super.loginMessage;
   }
 
   @override
-  set userMessage(String value) {
-    _$userMessageAtom.reportWrite(value, super.userMessage, () {
-      super.userMessage = value;
+  set loginMessage(String value) {
+    _$loginMessageAtom.reportWrite(value, super.loginMessage, () {
+      super.loginMessage = value;
     });
   }
 
@@ -294,7 +294,7 @@ mixin _$AuthStore on _AuthStore, Store {
   String toString() {
     return '''
 username: ${username},
-userMessage: ${userMessage},
+loginMessage: ${loginMessage},
 password: ${password},
 passwordMessage: ${passwordMessage},
 confirmPassword: ${confirmPassword},
