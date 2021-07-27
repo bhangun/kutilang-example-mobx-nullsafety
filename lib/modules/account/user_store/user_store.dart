@@ -1,7 +1,7 @@
 import 'package:f_logs/f_logs.dart';
 import 'package:flutter/material.dart';
 import 'package:kutilang_example/modules/account/models/user_model.dart';
-import 'package:kutilang_example/modules/account/pages/user_form.dart';
+import 'package:kutilang_example/modules/account/screens/user_form.dart';
 import 'package:kutilang_example/modules/account/services/user_routes.dart';
 import 'package:kutilang_example/modules/account/services/user_services.dart';
 import 'package:kutilang_example/services/navigation.dart';

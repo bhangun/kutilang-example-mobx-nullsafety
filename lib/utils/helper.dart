@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -39,5 +40,24 @@ instantToDate(DateTime date){
   return DateTime.parse(date.toString().substring(0,date.toString().length-1));
 }
 
+
+showModal(context, text) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        action: SnackBarAction(
+          label: 'Action',
+          onPressed: () {
+            // Code to execute.
+          },
+        ),
+        content: Text(text),
+        duration: Duration(milliseconds: 1500),
+        width: 280.0, // Width of the SnackBar.
+        padding: EdgeInsets.symmetric(
+          horizontal: 8.0, // Inner padding for SnackBar content.
+        ),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+      ));
 
 

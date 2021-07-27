@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../pages/about.dart';
-import '../pages/home.dart';
-import '../pages/login.dart';
-import '../pages/splash.dart';
+import '../screens/about.dart';
+import '../screens/home.dart';
+import '../screens/login.dart';
+import '../screens/splash.dart';
 
 class AppsRoutes {
   AppsRoutes._();
@@ -18,6 +18,6 @@ class AppsRoutes {
     splash: (BuildContext context) => SplashScreen(),
     login: (BuildContext context) => LoginScreen(),
     home: (BuildContext context) => HomeScreen(),
-    about: (BuildContext context) => AboutPage(),
+    about: (BuildContext context) => AboutScreen(),
   };
 }

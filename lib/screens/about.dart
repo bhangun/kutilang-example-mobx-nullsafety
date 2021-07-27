@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:kutilang_example/widgets/appbar_widget.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-class AboutPage extends StatefulWidget {
-  AboutPage({Key? key}) : super(key: key);
+class AboutScreen extends StatefulWidget {
+  AboutScreen({Key? key}) : super(key: key);
 
   @override
-  _AboutPageState createState() => _AboutPageState();
+  _AboutScreenState createState() => _AboutScreenState();
 }
 
-class _AboutPageState extends State<AboutPage> {
+class _AboutScreenState extends State<AboutScreen> {
   String appName = "";
   String packageName = "";
   String version = "";

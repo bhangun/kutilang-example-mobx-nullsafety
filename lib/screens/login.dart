@@ -12,6 +12,7 @@ import '../modules/kojek/ko_routes.dart';
 import '../services/navigation.dart';
 import '../store/settings_store/settings_store.dart';
 import '../utils/config.dart';
+import '../utils/helper.dart';
 import '../widgets/textfield_widget.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -95,11 +96,11 @@ class _Loginpagestate extends State<LoginScreen> {
                       icon: Icon(Icons.flag),
                       onPressed: () => _showLocales(store)),
                 ]),
-            body: Stack(children: [
+            body: Column(children: [
+              _body(context),
               _authStore.showError
-                  ? _showModal(_authStore.message(context))
+                  ? showModal(context, _authStore.message(context))
                   : Container(child: Text(_authStore.message(context))),
-              _body(context)
             ])));
   }
 
@@ -169,9 +170,7 @@ class _Loginpagestate extends State<LoginScreen> {
   Widget _signInButton() => ElevatedButton(
         key: Key('user_sign_button'),
         onPressed: () => _authStore.login(),
-        child: Text(AppLocalizations.of(context)!.sign_in +
-            '-' +
-            _authStore.message(context)),
+        child: Text(AppLocalizations.of(context)!.sign_in),
       );
 
   _onEyePressed() {
@@ -196,23 +195,4 @@ class _Loginpagestate extends State<LoginScreen> {
 
   _localeBtn(title, key, store) =>
       TextButton(child: Text(title), onPressed: () => store.switchLocale(key));
-
-  _showModal(text) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        action: SnackBarAction(
-          label: 'Action',
-          onPressed: () {
-            // Code to execute.
-          },
-        ),
-        content: Text(text),
-        duration: Duration(milliseconds: 1500),
-        width: 280.0, // Width of the SnackBar.
-        padding: EdgeInsets.symmetric(
-          horizontal: 8.0, // Inner padding for SnackBar content.
-        ),
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-      ));
 }
