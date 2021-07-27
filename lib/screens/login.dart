@@ -99,7 +99,7 @@ class _Loginpagestate extends State<LoginScreen> {
             body: Column(children: [
               _body(context),
               _authStore.showError
-                  ? showModal(context, _authStore.message(context))
+                  ? Container()///showModal(context, _authStore.message(context))
                   : Container(child: Text(_authStore.message(context))),
             ])));
   }

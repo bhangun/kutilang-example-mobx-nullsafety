@@ -67,8 +67,6 @@ dependencies:
 
   flutter_svg: ^0.22.0
 
-  responsive_builder: ^0.4.1
-
   json_annotation: ^4.0.0
 
   #another_flushbar: ^1.10.13
@@ -84,6 +82,9 @@ dependencies:
   sensors_plus: ^1.0.2
 
   shared_preferences:
+
+  responsive_builder: ^0.4.1
+  #responsive_framework: ^0.1.4
 
 dev_dependencies:
   flutter_test:
