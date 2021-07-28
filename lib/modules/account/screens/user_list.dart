@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:kutilang_example/modules/account/services/user_routes.dart';
-import 'package:kutilang_example/modules/account/user_store/user_store.dart';
+import 'package:kutilang_example/modules/account/store/user_store.dart';
 import 'package:kutilang_example/services/navigation.dart';
 import 'package:kutilang_example/widgets/alert_widget.dart';
 import 'package:kutilang_example/widgets/bottom_bar_widget.dart';

@@ -1,8 +1,16 @@
-# jh_flutter_sample
+# Kutilang
 
 A new Flutter project.
 
 ## Getting Started
+
+### NOTES
+
+In the first generated apps there would error dependancy  to this package.
+
+`import 'package:flutter_gen/gen_l10n/app_localizations.dart';`
+
+but don't worry, when you run the Flutter apps this package is generated and it should be solved.
 
 ### Clean and remove all generated files
 
@@ -28,7 +36,6 @@ flutter packages pub run build_runner watch
 
 ```
 flutter test test/<domain/service>_test.dart
-
 ```
 
 #### Widget  Test
@@ -94,8 +101,6 @@ flutter build ios
 
 *[fastlane](https://https://docs.fastlane.tools)* is the easiest way to automate beta deployments and releases for your iOS and Android apps. 🚀 It handles all tedious tasks, like generating screenshots, dealing with code signing, and releasing your application.
 
-
-
 ##### Documentation
 
 To show the documentation in your terminal, run
@@ -103,8 +108,6 @@ To show the documentation in your terminal, run
 ```
 fastlane action validate_play_store_json_key
 ```
-
-
 
 you can run the following command from your terminal
 
@@ -117,8 +120,6 @@ To pass parameters, make use of the `:` symbol, for example
 ```
 fastlane run validate_play_store_json_key parameter1:"value1" parameter2:"value2"
 ```
-
-
 
 ### Configure *supply*
 
@@ -135,8 +136,6 @@ If your app has been created on the Google Play developer console, you're ready 
 ```
 fastlane supply init
 ```
-
-
 
 ### Version History
 
